@@ -1,9 +1,9 @@
 # microm
 
-a virtual machine with registers.
+a virtual machine with registers and a stack.
 
 ## infrastructure
 
-microm has 3 types of registers: integer, float int point and strings. they are numbered from 0 to 15 and are 64 bits wide, except for the string registers.
+stack for now, registers will be added later.
 
-each type has its own stack.
+lists are statically typed at runtime.

@@ -1,6 +1,11 @@
-FLAGS := -O2 -std=c++17
-OUT := -o microm.exe
-SRC := main.cpp ./vm/vm.cpp
+VFLAGS := -skip-unused -prod
+VCC := gcc
 
-all:
-	g++ $(FLAGS) $(OUT) $(SRC)
+dev:
+	v .
+
+release:
+	v $(VFLAGS) -cc $(VCC) .
+
+debug:
+	v -d debug .
