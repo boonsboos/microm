@@ -1,22 +1,36 @@
 #pragma once
 
+#include <array>
 #include <iostream>
 #include <vector>
 
-#include "values.hpp"
+#include "mvalue.hpp"
 
+using std::array;
 using std::string;
 using std::vector;
 
 class Microm
 {
 	MValue registers[16];
-	vector<MValue> stack;
+	vector<MValue>    stack;
 
 public:
 
-	inline void dump_stack() {
-		
+	Microm() {
+		for (int i = 0; i < 16; i++) {
+			registers[i] = MValue();
+		}
+	}
+
+	// utility
+	inline void dump() {
+		for (int i = 0; i < 16; i++) {
+			if ((i + 1) % 4 != 0) // who needs aligning
+				std::cout << "r" << i << ": " << registers[i].to_string() << " | ";
+			else
+				std::cout << "r" << i << ": " << registers[i].to_string() << "\n";
+		}
 	}
 
 	// worked out in instructions.cpp

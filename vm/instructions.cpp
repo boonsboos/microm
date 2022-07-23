@@ -1,5 +1,5 @@
 #include "vm.hpp"
-#include "values.hpp"
+#include "mvalue.hpp"
 
 #include <vector>
 
@@ -13,4 +13,15 @@ MValue Microm::pop()
 	auto a = stack[stack.size() - 1];
 	stack.pop_back();
 	return a;
+}
+
+void Microm::mov(int reg, MValue v)
+{
+	registers[reg] = v;
+}
+
+MValue Microm::popr(int reg)
+{
+	return registers[reg];
+	registers[reg] = MValue(uint8_t(0));
 }
