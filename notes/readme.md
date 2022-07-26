@@ -1,0 +1,1 @@
+this folder contains notes i've taken while designing the various components of microm

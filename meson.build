@@ -3,6 +3,7 @@ project('microm', 'cpp',
   default_options : ['warning_level=3', 'cpp_std=c++20'])
 
 vm = ['vm/instructions.cpp', 'vm/mvalue.cpp']
+loader = ['loader/mloader.cpp']
 
 executable('microm',
-           'main.cpp', vm)
+           'main.cpp', vm, loader)

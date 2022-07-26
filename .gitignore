@@ -1,4 +1,4 @@
 microm*
 build/
 builddir/
-,vscode/
+.vscode/
