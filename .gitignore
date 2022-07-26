@@ -1,4 +1,5 @@
-microm*
+microm
+microm.exe
 build/
 builddir/
 .vscode/
