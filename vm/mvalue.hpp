@@ -74,5 +74,28 @@ public:
 	inline std::ostream& operator<< (std::ostream &out) {
 		return out << this->to_string();
 	}
+
+	// ugly
+	inline MValue operator+ (MValue a) {
+		if (this->is_list || a.is_list)
+			throw "ADD: cannot add with lists";
+
+		if (this->t != a.t)
+			throw "ADD: types do not match";
+
+		switch(a.t) {
+			case U8 : return MValue(uint8_t(this->v.u8 + a.v.u8));
+			case U16: return MValue(uint8_t(this->v.u16+a.v.u16));
+			case U32: return MValue(uint8_t(this->v.u32+a.v.u32));
+			case U64: return MValue(uint8_t(this->v.u64+a.v.u64));
+			case I8 : return MValue(uint8_t(this->v.i8 + a.v.i8));
+			case I16: return MValue(uint8_t(this->v.i16+a.v.i16));
+			case I32: return MValue(uint8_t(this->v.i32+a.v.i32));
+			case I64: return MValue(uint8_t(this->v.i64+a.v.i64));
+			case F32: return MValue(uint8_t(this->v.f32+a.v.f32));
+			case F64: return MValue(uint8_t(this->v.f64+a.v.f64));
+			default:  return MValue(uint8_t(this->v.u8 + a.v.u8)); // should be unreachable, but just in case
+		}
+	}
 		
 };

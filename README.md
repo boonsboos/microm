@@ -4,12 +4,14 @@ a virtual machine with registers and a stack.
 
 ## infrastructure
 
-stack for now, registers will be added later.
+stack is mostly for lists, registers mostly for operands and math.
 
-lists are statically typed at runtime.
+lists are strongly typed.
+
+the bytecode format is TBD. there will be an assembly dialect for playing around.
 
 ## building
-make sure you have meson or make installed.
+make sure you have meson installed.
 
 ```shell
 meson build
