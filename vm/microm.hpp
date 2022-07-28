@@ -5,6 +5,8 @@
 #include <vector>
 
 #include "mvalue.hpp"
+#include "../loader/minst.hpp"
+#include "../loader/mloader.hpp"
 
 using std::array;
 using std::string;
@@ -14,6 +16,7 @@ class Microm
 {
 	MValue         registers[16];
 	vector<MValue> stack;
+	vector<MInst>  program;
 
 public:
 
@@ -23,6 +26,9 @@ public:
 	}
 
 	~Microm() {};
+
+	// runtime
+	void run(MLoader m);
 
 	// utility
 	inline void dump() {

@@ -9,17 +9,16 @@ between [] means optional
  
 where TYPE is any of Microm's supported number types or a list of those types.
 
-you would then do stuff like `add i32 0 1` or `mov u8 65 1`
-
+you would then do stuff like `add 0 1` or `mov U8 0 128` or `copy`
 ***
 encoding TYPE would be done as follows: 
-the highest bit of the byte is set.
-
-therefore:
 ```
 0x00 = U8
-0x70 = U8 list
 0x01 = U16
-0x71 = U16 list
+...
+0x09 = F64
 ```
-and so on.
+
+numbers are just plainly encoded, just as byte arrays; no LEB128 jank.
+
+do note the bytes are encoded in little endian format
