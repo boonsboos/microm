@@ -74,11 +74,9 @@ public:
 	void   band(int r, int s);// r & s | TYPED
 	void   bor(int r, int s); // r | s | TYPED
 	void   bxor(int r, int s);// r ^ s | TYPED
-	// logical operations - prefixed with l- for above reason
-	void   land(int r, int s);//r && s | TYPED, returns U8 in r
-	void   lor(int r, int s);// r || s | TYPED, returns U8 in r
-	void   eq(int r, int s); // r == s | TYPED, returns U8 in r
-	void   neq(int r, int s);// r != s | TYPED, returns U8 in r
+	// equality operations
+	void   eq(int r, int s); // r == s
+	void   neq(int r, int s);// r != s
 	// list ops | notes/list.md for info
 	void   list(int len_r, int type_r); // creates a new list with length in len_r and type in type_r | TYPED: len_r should be of type U64
 	void   idx(int list_r, int idx); // puts the value int the list[idx] in r0, where list is a register | TYPED

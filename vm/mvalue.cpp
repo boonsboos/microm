@@ -8,6 +8,7 @@ MValue::MValue()
 
 MValue::MValue(uint8_t a)
 {
+	std::cout << "New byte!\n";
 	v.u8 = a;
 	t = U8;
 }
@@ -63,6 +64,96 @@ MValue::MValue(double a)
 {
 	v.f64 = a;
 	t = F64;
+}
+
+MValue::MValue(uint8_t a, size_t len)
+{
+	this->t = U8;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].u8 = uint8_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(uint16_t a, size_t len)
+{
+	this->t = U16;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].u16 = uint16_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(uint32_t a, size_t len)
+{
+	this->t = U32;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].u32 = uint32_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(uint64_t a, size_t len)
+{
+	this->t = U64;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].u64 = uint64_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(int8_t a, size_t len)
+{
+	this->t = I8;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].i8 = int8_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(int16_t a, size_t len)
+{
+	this->t = I16;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].i16 = int16_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(int32_t a, size_t len)
+{
+	this->t = I32;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].i32 = int32_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(int64_t a, size_t len)
+{
+	this->t = I64;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].i64 = int64_t(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(float a, size_t len)
+{
+	this->t = F32;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].f32 = float(0); // touch default value
+	this->len = len;
+}
+
+MValue::MValue(double a, size_t len)
+{
+	this->t = F64;
+	this->is_list = true;
+	this->l = new Value[len];
+	l[0].f64 = double(0); // touch default value
+	this->len = len;
 }
 
 std::string MValue::to_string() {

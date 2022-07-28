@@ -7,6 +7,8 @@
 
 #include "mexcept.hpp"
 
+using std::vector;
+
 union Value
 {
 	uint8_t  u8;
@@ -54,19 +56,19 @@ inline std::string type_to_string(Type t)
 
 class MValue
 {	
-	Value   v;
-	Type    t;
+public:
+	Value  v;
+	Type   t;
 	
 	// list stuff
-	bool is_list   = false;
-	static const size_t list_size = 1;
-	Value l[list_size];
-
-public:
+	bool   is_list   = false;
+	size_t len;
+	Value* l = new Value[1];
 	
-	~MValue() {};
+	~MValue() { /*delete[] l;*/ }
 
 	MValue(); // makes U8 with value 0
+	MValue(const MValue &a) {this->v=a.v;this->t=a.t;this->is_list=a.is_list;this->len=a.len;this->l=a.l;}
 	MValue(uint8_t  a);
 	MValue(uint16_t a);
 	MValue(uint32_t a);
@@ -77,6 +79,16 @@ public:
 	MValue(int64_t  a);
 	MValue(float    a);
 	MValue(double   a);
+	MValue(uint8_t  a, size_t len);
+	MValue(uint16_t a, size_t len);
+	MValue(uint32_t a, size_t len);
+	MValue(uint64_t a, size_t len);
+	MValue(int8_t   a, size_t len);
+	MValue(int16_t  a, size_t len);
+	MValue(int32_t  a, size_t len);
+	MValue(int64_t  a, size_t len);
+	MValue(float    a, size_t len);
+	MValue(double   a, size_t len);
 
 	std::string to_string();
 
@@ -211,6 +223,119 @@ public:
 			case I32: return MValue(int32_t (this->v.i32%a.v.i32));
 			case I64: return MValue(int64_t (this->v.i64%a.v.i64));
 			default:  return MValue(uint8_t (this->v.u8 % a.v.u8)); // unreachable, but just in case
+		}
+	}
+
+	inline MValue operator& (MValue a) {
+		if (this->is_list || a.is_list)
+			throw MExcept("BAND: cannot perform bitwise and on lists\n");
+
+		if (this->t == F32 || this->t == F64)
+			throw MExcept("BAND: cannot perform bitwise and on floating point numbers\n");
+
+		if (this->t != a.t)
+			throw TYPE_ERROR("BAND", type_to_string(this->t), type_to_string(a.t));
+
+		switch(a.t) {
+			case U8 : return MValue(uint8_t (this->v.u8  & a.v.u8));
+			case U16: return MValue(uint16_t(this->v.u16 & a.v.u16));
+			case U32: return MValue(uint32_t(this->v.u32 & a.v.u32));
+			case U64: return MValue(uint64_t(this->v.u64 & a.v.u64));
+			case I8 : return MValue(int8_t  (this->v.i8  & a.v.i8));
+			case I16: return MValue(int16_t (this->v.i16 & a.v.i16));
+			case I32: return MValue(int32_t (this->v.i32 & a.v.i32));
+			case I64: return MValue(int64_t (this->v.i64 & a.v.i64));
+			default:  return MValue(uint8_t (this->v.u8  & a.v.u8)); // unreachable, but just in case
+		}
+	}
+
+	inline MValue operator| (MValue a) {
+		if (this->is_list || a.is_list)
+			throw MExcept("BOR: cannot perform bitwise or on lists\n");
+
+		if (this->t == F32 || this->t == F64)
+			throw MExcept("BOR: cannot perform bitwise or on floating point numbers\n");
+
+		if (this->t != a.t)
+			throw TYPE_ERROR("BOR", type_to_string(this->t), type_to_string(a.t));
+
+		switch(a.t) {
+			case U8 : return MValue(uint8_t (this->v.u8  | a.v.u8));
+			case U16: return MValue(uint16_t(this->v.u16 | a.v.u16));
+			case U32: return MValue(uint32_t(this->v.u32 | a.v.u32));
+			case U64: return MValue(uint64_t(this->v.u64 | a.v.u64));
+			case I8 : return MValue(int8_t  (this->v.i8  | a.v.i8));
+			case I16: return MValue(int16_t (this->v.i16 | a.v.i16));
+			case I32: return MValue(int32_t (this->v.i32 | a.v.i32));
+			case I64: return MValue(int64_t (this->v.i64 | a.v.i64));
+			default:  return MValue(uint8_t (this->v.u8  | a.v.u8)); // unreachable, but just in case
+		}
+	}
+
+	inline MValue operator^ (MValue a) {
+		if (this->is_list || a.is_list)
+			throw MExcept("BXOR: cannot perform bitwise xor on lists\n");
+
+		if (this->t == F32 || this->t == F64)
+			throw MExcept("BXOR: cannot perform bitwise xor on floating point numbers\n");
+
+		if (this->t != a.t)
+			throw TYPE_ERROR("BXOR", type_to_string(this->t), type_to_string(a.t));
+
+		switch(a.t) {
+			case U8 : return MValue(uint8_t (this->v.u8  ^ a.v.u8));
+			case U16: return MValue(uint16_t(this->v.u16 ^ a.v.u16));
+			case U32: return MValue(uint32_t(this->v.u32 ^ a.v.u32));
+			case U64: return MValue(uint64_t(this->v.u64 ^ a.v.u64));
+			case I8 : return MValue(int8_t  (this->v.i8  ^ a.v.i8));
+			case I16: return MValue(int16_t (this->v.i16 ^ a.v.i16));
+			case I32: return MValue(int32_t (this->v.i32 ^ a.v.i32));
+			case I64: return MValue(int64_t (this->v.i64 ^ a.v.i64));
+			default:  return MValue(uint8_t (this->v.u8  ^ a.v.u8)); // unreachable, but just in case
+		}
+	}
+
+	inline bool operator== (MValue a) {
+		if (this->is_list || a.is_list)
+			throw MExcept("EQ: cannot get equality of lists\n");
+
+		if (this->t != a.t)
+			throw TYPE_ERROR("EQ", type_to_string(this->t), type_to_string(a.t));
+
+		switch(a.t) {
+			case U8 : return (this->v.u8 ==a.v.u8);
+			case U16: return (this->v.u16==a.v.u16);
+			case U32: return (this->v.u32==a.v.u32);
+			case U64: return (this->v.u64==a.v.u64);
+			case I8 : return (this->v.i8 ==a.v.i8);
+			case I16: return (this->v.i16==a.v.i16);
+			case I32: return (this->v.i32==a.v.i32);
+			case I64: return (this->v.i64==a.v.i64);
+			case F32: return (this->v.f32==a.v.f32);
+			case F64: return (this->v.f64==a.v.f64);
+			default:  return false; // literally unreachable
+		}
+	}
+
+	inline bool operator!= (MValue a) {
+		if (this->is_list || a.is_list)
+			throw MExcept("EQ: cannot get equality of lists\n");
+
+		if (this->t != a.t)
+			throw TYPE_ERROR("EQ", type_to_string(this->t), type_to_string(a.t));
+
+		switch(a.t) {
+			case U8 : return (this->v.u8 !=a.v.u8);
+			case U16: return (this->v.u16!=a.v.u16);
+			case U32: return (this->v.u32!=a.v.u32);
+			case U64: return (this->v.u64!=a.v.u64);
+			case I8 : return (this->v.i8 !=a.v.i8);
+			case I16: return (this->v.i16!=a.v.i16);
+			case I32: return (this->v.i32!=a.v.i32);
+			case I64: return (this->v.i64!=a.v.i64);
+			case F32: return (this->v.f32!=a.v.f32);
+			case F64: return (this->v.f64!=a.v.f64);
+			default:  return false; // literally unreachable
 		}
 	}
 		
