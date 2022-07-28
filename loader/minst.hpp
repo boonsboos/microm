@@ -19,7 +19,9 @@ enum InstType {
 	GET,
 	SET,
 	COPY,
-	SWAP
+	SWAP,
+	ADD,
+	SUB
 };
 
 inline std::string inst_type_to_string(InstType t)
@@ -37,6 +39,8 @@ inline std::string inst_type_to_string(InstType t)
 		case SET:  return "SET";
 		case COPY: return "COPY";
 		case SWAP: return "SWAP";
+		case ADD:  return "ADD";
+		case SUB:  return "SUB";
 		default: return "UNREACHABLE";
 	}
 }

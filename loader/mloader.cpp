@@ -250,6 +250,20 @@ void MLoader::load(string filename)
 			case 0x09:
 				instructions.push_back(MInst(SWAP));
 				break;
+			case 0x0a:
+				instructions.push_back(MInst(
+					ADD,
+					(int) get_u8(bytes),
+					(int) get_u8(bytes)
+				));
+				break;
+			case 0x0b:
+				instructions.push_back(MInst(
+					SUB,
+					(int) get_u8(bytes),
+					(int) get_u8(bytes)
+				));
+				break;
 		}
 		
 	}

@@ -7,6 +7,7 @@ int main(int argc, char **argv)
 {
 
 	MLoader l;
+
 	try {
 		l.load("test");
 	} catch(MExcept e) {
