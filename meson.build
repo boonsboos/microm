@@ -5,5 +5,7 @@ project('microm', 'cpp',
 vm =     ['vm/instructions.cpp', 'vm/mvalue.cpp', 'vm/runtime.cpp']
 loader = ['loader/mloader.cpp', 'loader/minst.cpp']
 
+add_project_arguments('-O3', '-g0', language: 'cpp')
+
 executable('microm',
            'main.cpp', vm, loader)

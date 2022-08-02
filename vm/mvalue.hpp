@@ -63,12 +63,11 @@ public:
 	// list stuff
 	bool   is_list   = false;
 	size_t len;
-	Value* l = new Value[1];
+	vector<Value> l;
 	
 	~MValue() { /*delete[] l;*/ }
 
 	MValue(); // makes U8 with value 0
-	MValue(const MValue &a) {this->v=a.v;this->t=a.t;this->is_list=a.is_list;this->len=a.len;this->l=a.l;}
 	MValue(uint8_t  a);
 	MValue(uint16_t a);
 	MValue(uint32_t a);

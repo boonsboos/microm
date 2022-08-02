@@ -1,5 +1,6 @@
 microm
 microm.exe
 build/
+clean/
 builddir/
 .vscode/
